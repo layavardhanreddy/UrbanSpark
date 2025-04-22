@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UrbanSpark Statistics</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .chart-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <nav class="fixed w-full bg-white/90 backdrop-blur-sm z-50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="index.html" class="text-2xl font-bold text-blue-600">UrbanSpark</a>
+                    </div>
+                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                        <a href="index.html" class="nav-link">Home</a>
+                        <a href="submit.html" class="nav-link">Submit Idea</a>
+                        <a href="ideas.php" class="nav-link">Ideas Gallery</a>
+                        <a href="stats.html" class="nav-link bg-blue-100 text-blue-600 hover:bg-blue-200">Statistics</a>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <a href="admin/login.php" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
+                        Admin Login
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="pt-20 pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h1 class="text-4xl font-bold text-center mb-12">City Statistics</h1>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                <div class="chart-container">
+                    <h2 class="text-xl font-semibold mb-4">Traffic Congestion</h2>
+                    <canvas id="trafficChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h2 class="text-xl font-semibold mb-4">Resource Usage</h2>
+                    <canvas id="resourceChart"></canvas>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                <div class="chart-container">
+                    <h2 class="text-xl font-semibold mb-4">Delivery Efficiency</h2>
+                    <canvas id="deliveryChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h2 class="text-xl font-semibold mb-4">Submitted Ideas by Category</h2>
+                    <canvas id="ideasChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">UrbanSpark</h3>
+                    <p class="text-gray-400">Your ideas today, a better city tomorrow.</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition">Home</a></li>
+                        <li><a href="submit.html" class="text-gray-400 hover:text-white transition">Submit Idea</a></li>
+                        <li><a href="ideas.php" class="text-gray-400 hover:text-white transition">Ideas Gallery</a></li>
+                        <li><a href="stats.html" class="text-gray-400 hover:text-white transition">Statistics</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Connect With Us</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-gray-700 text-center text-gray-400">
+                <p>&copy; 2024 UrbanSpark. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const trafficCtx = document.getElementById('trafficChart').getContext('2d');
+        new Chart(trafficCtx, {
+            type: 'line',
+            data: {
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                datasets: [{
+                    label: 'Traffic Congestion (%)',
+                    data: [65, 75, 80, 85, 90, 60, 50],
+                    borderColor: 'rgb(59, 130, 246)',
+                    tension: 0.1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100
+                    }
+                }
+            }
+        });
+
+        const resourceCtx = document.getElementById('resourceChart').getContext('2d');
+        new Chart(resourceCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Water', 'Electricity', 'Gas', 'Waste'],
+                datasets: [{
+                    label: 'Resource Usage',
+                    data: [1200, 800, 500, 300],
+                    backgroundColor: [
+                        'rgba(59, 130, 246, 0.8)',
+                        'rgba(16, 185, 129, 0.8)',
+                        'rgba(245, 158, 11, 0.8)',
+                        'rgba(239, 68, 68, 0.8)'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
+
+        const deliveryCtx = document.getElementById('deliveryChart').getContext('2d');
+        new Chart(deliveryCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['On Time', 'Delayed', 'Early'],
+                datasets: [{
+                    data: [75, 15, 10],
+                    backgroundColor: [
+                        'rgba(16, 185, 129, 0.8)',
+                        'rgba(239, 68, 68, 0.8)',
+                        'rgba(245, 158, 11, 0.8)'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
+
+        const ideasCtx = document.getElementById('ideasChart').getContext('2d');
+        new Chart(ideasCtx, {
+            type: 'pie',
+            data: {
+                labels: ['Transportation', 'Environment', 'Infrastructure', 'Services'],
+                datasets: [{
+                    data: [30, 25, 25, 20],
+                    backgroundColor: [
+                        'rgba(59, 130, 246, 0.8)',
+                        'rgba(16, 185, 129, 0.8)',
+                        'rgba(245, 158, 11, 0.8)',
+                        'rgba(139, 92, 246, 0.8)'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
+    </script>
+</body>
+</html> 
